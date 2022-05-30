@@ -27,22 +27,8 @@ Resources:
   firstlambda:
     Type: AWS::Serverless::Function
     Properties:
+      CodeUri: first-lambda/
       FunctionName: "first_lambda"
-      InlineCode: |
-          exports.lambdaHandler = async (event, context) => {
-            let response;
-            try {
-                response = {
-                    'statusCode': 200,
-                    'body': JSON.stringify({
-                        message: 'hello guna'
-                    })
-                }
-            } catch (err) {
-                return err;
-            }
-            return response
-          };
       Handler: app.handler
       Runtime: nodejs14.x
       Events:
