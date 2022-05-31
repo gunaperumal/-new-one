@@ -43,9 +43,10 @@ Resources:
             RouteSettings:
               ThrottlingBurstLimit: 600 
   
-  Sam-AuthenticateUser:
+  SamAuthenticateUser:
     Type: 'AWS::Serverless::Function'
     Properties:
+      FunctionName: "Sam-AuthenticateUser"
       Handler: index.handler
       Runtime: nodejs14.x
       CodeUri: Sam-AuthenticateUser/
