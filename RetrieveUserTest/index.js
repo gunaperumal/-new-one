@@ -80,9 +80,9 @@ exports.handler = (event, context, callback) => {
                                         axios.get(url, null).then(async (resp) => {
                                             if (resp.data) {
                                                 socialModel.updateOne(
-                                                    { "email": email, "socialMedia.userId" :  userId },
-                                                    { $set: { "socialMedia.$.userProfileImage" : resp.data.profile_picture_url } }
-                                                 ).exec(function (err, doc) {
+                                                    { "email": email, "socialMedia.userId": userId },
+                                                    { $set: { "socialMedia.$.userProfileImage": resp.data.profile_picture_url } }
+                                                ).exec(function (err, doc) {
                                                     resolve({ status: true })
                                                 })
                                             } else {
