@@ -48,14 +48,14 @@ Resources:
     Properties:
       CodeUri: CreateUser-Sam/
       FunctionName: "CreateUser-Sam"
-      Handler: app.handler
+      Handler: index.lambdahandler
       Runtime: nodejs14.x
       Events:
         ExplicitApi: # warning: creates a public endpoint
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
-            Method: GET
+            Method: POST
             Path: /create
             TimeoutInMillis: 15000
             PayloadFormatVersion: "1.0"
