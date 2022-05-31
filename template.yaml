@@ -43,43 +43,6 @@ Resources:
             RouteSettings:
               ThrottlingBurstLimit: 600 
   
-  SamAuthenticateUser:
-    Type: 'AWS::Serverless::Function'
-    Properties:
-      FunctionName: "Sam-AuthenticateUser"
-      Handler: index.handler
-      Runtime: nodejs14.x
-      CodeUri: Sam-AuthenticateUser/
-      Events:
-        ExplicitApi: # warning: creates a public endpoint
-          Type: HttpApi
-          Properties:
-            ApiId: !Ref HttpApi
-            Method: GET
-            Path: /guna
-            TimeoutInMillis: 15000
-            PayloadFormatVersion: "1.0"
-            RouteSettings:
-              ThrottlingBurstLimit: 600  
-
-  HttpApi:
-    Type: AWS::Serverless::HttpApi
-    Properties:
-      StageName: !Ref StageName
-      Tags:
-        Tag: Value
-      AccessLogSettings:
-        DestinationArn: !GetAtt AccessLogs.Arn
-        Format: $context.requestId
-      DefaultRouteSettings:
-        ThrottlingBurstLimit: 200
-      RouteSettings:
-        "GET /hello":
-          ThrottlingBurstLimit: 500 # overridden in HttpApi Event
-      StageVariables:
-        StageVar: Value
-      FailOnWarnings: true
-
   AccessLogs:
     Type: AWS::Logs::LogGroup
 
