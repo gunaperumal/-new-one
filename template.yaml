@@ -52,8 +52,6 @@ Resources:
       Description: ''
       MemorySize: 10240
       Timeout: 20
-      Role: >-
-        arn:aws:iam::965509556893:role/peering-lambda-AWSLambdaVPCAccessExecutionRole
       Events:
         Api1:
           Type: Api
