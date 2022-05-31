@@ -42,7 +42,24 @@ Resources:
             PayloadFormatVersion: "1.0"
             RouteSettings:
               ThrottlingBurstLimit: 600 
-  
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: !Ref StageName
+      Tags:
+        Tag: Value
+      AccessLogSettings:
+        DestinationArn: !GetAtt AccessLogs.Arn
+        Format: $context.requestId
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 200
+      RouteSettings:
+        "GET /hello":
+          ThrottlingBurstLimit: 500 # overridden in HttpApi Event
+      StageVariables:
+        StageVar: Value
+      FailOnWarnings: true
+
   AccessLogs:
     Type: AWS::Logs::LogGroup
 
