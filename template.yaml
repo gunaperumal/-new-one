@@ -50,24 +50,17 @@ Resources:
       Handler: index.handler
       Runtime: nodejs14.x
       CodeUri: Sam-AuthenticateUser/
-      Description: ''
-      MemorySize: 10240
-      Timeout: 20
       Events:
-        Api1:
-          Type: Api
+        ExplicitApi: # warning: creates a public endpoint
+          Type: HttpApi
           Properties:
-            Path: /user/authenticateUser
-            Method: ANY
-        Api2:
-          Type: Api
-          Properties:
-            Path: /user/authenticateUser
-            Method: ANY
-      Layers:
-        - >-
-          arn:aws:lambda:ap-south-1:580247275435:layer:LambdaInsightsExtension:16
-           
+            ApiId: !Ref HttpApi
+            Method: GET
+            Path: /guna
+            TimeoutInMillis: 15000
+            PayloadFormatVersion: "1.0"
+            RouteSettings:
+              ThrottlingBurstLimit: 600  
 
   HttpApi:
     Type: AWS::Serverless::HttpApi
