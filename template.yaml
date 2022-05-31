@@ -43,6 +43,63 @@ Resources:
             RouteSettings:
               ThrottlingBurstLimit: 600
 
+  CreateUserTest:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CreateUserTest/
+      FunctionName: "Create_User-Test"
+      Handler: index.handler
+      Runtime: nodejs14.x
+      Events:
+        ExplicitApi: # warning: creates a public endpoint
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Method: post
+            Path: /create
+            TimeoutInMillis: 15000
+            PayloadFormatVersion: "1.0"
+            RouteSettings:
+              ThrottlingBurstLimit: 600 
+  
+  AuthenticateUserTest:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: AuthenticateUserTest/
+      FunctionName: "Authenticate_User-Test"
+      Handler: index.handler
+      Runtime: nodejs14.x
+      Events:
+        ExplicitApi: # warning: creates a public endpoint
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Method: post
+            Path: /auth
+            TimeoutInMillis: 15000
+            PayloadFormatVersion: "1.0"
+            RouteSettings:
+              ThrottlingBurstLimit: 600
+
+  RetriveUserTest:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RetriveUserTest/
+      FunctionName: "Retrive_User-Test"
+      Handler: inidex.handler
+      Runtime: nodejs14.x
+      Events:
+        ExplicitApi: # warning: creates a public endpoint
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Method: GET
+            Path: /retrive
+            TimeoutInMillis: 15000
+            PayloadFormatVersion: "1.0"
+            RouteSettings:
+              ThrottlingBurstLimit: 600             
+
   HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
