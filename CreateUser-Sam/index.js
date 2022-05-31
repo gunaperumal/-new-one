@@ -40,7 +40,7 @@ exports.handler = (event, context, callback) => {
         return result;
     }
 
-    var connectorMongodb = mongoose.connect(`mongodb+srv://${event.stageVariables['mongoDB']}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+    var connectorMongodb =  mongoose.connect(`mongodb+srv://${event.stageVariables['mongoDB']}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 
     switch (event.httpMethod) {
         case 'POST':
@@ -103,15 +103,15 @@ exports.handler = (event, context, callback) => {
                 }
 
                 if (event.stageVariables['email_validation_check'] && event.stageVariables['email_validation_check'] == "yes") {
-
-                    let validationUrl = `${event.stageVariables['email_validation_url']}${event.stageVariables['email_validation_api_key']}?email=${body.email}`;
+                    
+                    let validationUrl  = `${event.stageVariables['email_validation_url']}${event.stageVariables['email_validation_api_key']}?email=${body.email}`;
                     let email_validation = await axios.get(validationUrl)
 
-                    console.log("email_validation", JSON.stringify(email_validation.data));
+                    console.log("email_validation",JSON.stringify(email_validation.data));
 
                     if (email_validation.data && email_validation.data.disposable && email_validation.data.disposable !== false
                         && email_validation.data.is_reachable !== "safe") {
-
+                        
                         done('422', {
                             message: "Enter Valid Email"
                         });
