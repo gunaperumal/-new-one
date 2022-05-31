@@ -41,64 +41,34 @@ Resources:
             TimeoutInMillis: 15000
             PayloadFormatVersion: "1.0"
             RouteSettings:
-              ThrottlingBurstLimit: 600
-
-  CreateUserTest:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: CreateUserTest/
-      FunctionName: "Create_UserTest"
-      Handler: index.handler
-      Runtime: nodejs14.x
-      Events:
-        ExplicitApi: # warning: creates a public endpoint
-          Type: HttpApi
-          Properties:
-            ApiId: !Ref HttpApi
-            Method: POST
-            Path: /create
-            TimeoutInMillis: 15000
-            PayloadFormatVersion: "1.0"
-            RouteSettings:
               ThrottlingBurstLimit: 600 
   
-  AuthenticateUserTest:
-    Type: AWS::Serverless::Function
+  Sam-AuthenticateUser:
+    Type: 'AWS::Serverless::Function'
     Properties:
-      CodeUri: AuthenticateUserTest/
-      FunctionName: "Authenticate_UserTest"
       Handler: index.handler
       Runtime: nodejs14.x
+      CodeUri: Sam-AuthenticateUser/
+      Description: ''
+      MemorySize: 10240
+      Timeout: 20
+      Role: >-
+        arn:aws:iam::965509556893:role/peering-lambda-AWSLambdaVPCAccessExecutionRole
       Events:
-        ExplicitApi: # warning: creates a public endpoint
-          Type: HttpApi
+        Api1:
+          Type: Api
           Properties:
-            ApiId: !Ref HttpApi
-            Method: POST
-            Path: /auth
-            TimeoutInMillis: 15000
-            PayloadFormatVersion: "1.0"
-            RouteSettings:
-              ThrottlingBurstLimit: 600
-
-  RetriveUserTest:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: RetriveUserTest/
-      FunctionName: "Retrive_UserTest"
-      Handler: index.handler
-      Runtime: nodejs14.x
-      Events:
-        ExplicitApi: # warning: creates a public endpoint
-          Type: HttpApi
+            Path: /user/authenticateUser
+            Method: ANY
+        Api2:
+          Type: Api
           Properties:
-            ApiId: !Ref HttpApi
-            Method: GET
-            Path: /retrive
-            TimeoutInMillis: 15000
-            PayloadFormatVersion: "1.0"
-            RouteSettings:
-              ThrottlingBurstLimit: 600             
+            Path: /user/authenticateUser
+            Method: ANY
+      Layers:
+        - >-
+          arn:aws:lambda:ap-south-1:580247275435:layer:LambdaInsightsExtension:16
+           
 
   HttpApi:
     Type: AWS::Serverless::HttpApi
