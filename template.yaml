@@ -63,6 +63,8 @@ Resources:
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
+            Auth:
+              Authorizer: 'NONE'
             Method: POST
             Path: /create
             TimeoutInMillis: 15000
