@@ -49,6 +49,10 @@ Resources:
       CodeUri: CreateUser-Sam/
       FunctionName: "CreateUser-Sam"
       Handler: index.lambdahandler
+      Environment:
+        Variables:
+          databaseName: mongodb
+          databaseUser: admin
       Runtime: nodejs14.x
       Events:
         ExplicitApi: # warning: creates a public endpoint
