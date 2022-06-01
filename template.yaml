@@ -4,22 +4,26 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-  Auth:
-        Authorizers:
-          OAuth2Authorizer:
-            JwtConfiguration:
-              issuer: "https://aikyne.us.auth0.com/"
-              audience:
-                - https://aikyne-jwt-authorizer
-            IdentitySource: "$request.header.Authorization"
-        DefaultAuthorizer: OAuth2Authorizer
+JWTAuthorizer:
+    Type: AWS::ApiGatewayV2::Authorizer
+    Properties: 
+      ApiId: !Ref HttpApi
+      AuthorizerType: JWT
+      IdentitySource: 
+        - "$request.header.Authorization"
+      JwtConfiguration: 
+        Audience: 
+        - https://aikyne-jwt-authorizer
+        Issuer: "https://aikyne.us.auth0.com/"
+      Name: test-jwt-authorizer
+
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: hello-world/
       Handler: app.handler
-      Auth : !Ref Auth
+      Auth : !Ref JWTAuthorizer
       Runtime: nodejs14.x
       Events:
         ExplicitApi: # warning: creates a public endpoint
@@ -39,11 +43,11 @@ Resources:
       CodeUri: AuthenticateUser-Sam/
       FunctionName: "AuthenticateUser-Sam"
       Handler: index.lambdahandler
+      Auth : !Ref JWTAuthorizer
       Environment:
         Variables:
           databaseName: db
           databaseUser: admin
-      Auth : !Ref Auth
       Runtime: nodejs14.x
       Events:
         ExplicitApi: # warning: creates a public endpoint
@@ -63,6 +67,7 @@ Resources:
       CodeUri: CreateUser-Sam/
       FunctionName: "CreateUser-Sam"
       Handler: index.lambdahandler
+      Auth : !Ref JWTAuthorizer
       Environment:
         Variables:
           databaseName: mongodb
@@ -79,7 +84,7 @@ Resources:
             PayloadFormatVersion: "1.0"
             RouteSettings:
               ThrottlingBurstLimit: 600
-
+  
   HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
