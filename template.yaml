@@ -4,15 +4,7 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-  Auth:
-    Authorizer:
-      OAuth2Authorizer:
-        JwtConfiguration:
-          issuer: "https://aikyne.us.auth0.com/"
-          audience:
-            - https://aikyne-jwt-authorizer
-        IdentitySource: "$request.header.Authorization"
-    DefaultAuthorizer: OAuth2Authorizer
+
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
@@ -81,13 +73,21 @@ Resources:
   HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
-      Auth: !Ref Auth
       StageName: !Ref StageName
       Tags:
         Tag: Value
       AccessLogSettings:
         DestinationArn: !GetAtt AccessLogs.Arn
         Format: $context.requestId
+      Auth:
+        Authorizers:
+          OAuth2Authorizer:
+            JwtConfiguration:
+              issuer: "https://aikyne.us.auth0.com/"
+              audience:
+                - https://aikyne-jwt-authorizer
+            IdentitySource: "$request.header.Authorization"
+        DefaultAuthorizer: OAuth2Authorizer
       DefaultRouteSettings:
         ThrottlingBurstLimit: 200
       RouteSettings:
