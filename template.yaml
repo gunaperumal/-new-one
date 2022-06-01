@@ -5,7 +5,8 @@ Parameters:
     Type: String
     Default: Prod
   StageVariables:
-    mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
+    StageVar:
+      mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
 
 Resources:
   HelloWorldFunction:
