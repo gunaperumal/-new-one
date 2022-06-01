@@ -48,7 +48,6 @@ Resources:
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
-            Auth: !Ref Auth
             Method: POST
             Path: /auth
             TimeoutInMillis: 15000
@@ -82,6 +81,7 @@ Resources:
   HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
+      Auth: !Ref Auth
       StageName: !Ref StageName
       Tags:
         Tag: Value
