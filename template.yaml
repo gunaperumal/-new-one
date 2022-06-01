@@ -4,7 +4,7 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-  svar: {'test_var': 'test1var'}
+  svar: '{"test_var": "test1var"}'
 
 Resources:
   HelloWorldFunction:
