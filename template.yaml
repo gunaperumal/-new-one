@@ -5,8 +5,7 @@ Parameters:
     Type: String
     Default: Prod
   StageVariables:
-    StageVar:
-      mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
+    mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
 
 Resources:
   HelloWorldFunction:
@@ -87,7 +86,8 @@ Resources:
       RouteSettings:
         "GET /hello":
           ThrottlingBurstLimit: 500 # overridden in HttpApi Event
-      StageVariables: !Ref StageVariables
+      StageVariables:
+        mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
       FailOnWarnings: true
 
   AccessLogs:
