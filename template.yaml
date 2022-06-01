@@ -74,33 +74,11 @@ Resources:
             RouteSettings:
               ThrottlingBurstLimit: 600
 
-  RetriveUserSam:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: RetriveUser-Sam/
-      FunctionName: "RetriveUser-Sam"
-      Handler: index.lambdahandler
-      Environment:
-        Variables:
-          databaseName: admin
-          databaseUser: guna
-      Runtime: nodejs14.x
-      Events:
-        ExplicitApi: # warning: creates a public endpoint
-          Type: HttpApi
-          Properties:
-            ApiId: !Ref HttpApi
-            Method: POST
-            Path: /retrive
-            TimeoutInMillis: 15000
-            PayloadFormatVersion: "1.0"
-            RouteSettings:
-              ThrottlingBurstLimit: 600
-
     HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
       StageName: !Ref StageName
+      StageVariables: !Ref StageVariables 
       Tags:
         Tag: Value
       AccessLogSettings:
