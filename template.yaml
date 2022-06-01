@@ -4,7 +4,11 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-    
+  StageVariables:
+    Type: String
+    Key: mongoDB
+    Value: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
+
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
@@ -30,6 +34,10 @@ Resources:
       CodeUri: AuthenticateUser-Sam/
       FunctionName: "AuthenticateUser-Sam"
       Handler: index.lambdahandler
+      Environment:
+        Variables:
+          databaseName: db
+          databaseUser: admin
       Runtime: nodejs14.x
       Events:
         ExplicitApi: # warning: creates a public endpoint
