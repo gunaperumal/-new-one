@@ -4,10 +4,6 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-  StageVariables:
-    Type: String
-    Name: mongoDB
-    Value: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
 
 Resources:
   HelloWorldFunction:
@@ -78,7 +74,6 @@ Resources:
     Type: AWS::Serverless::HttpApi
     Properties:
       StageName: !Ref StageName
-      StageVariables: !Ref StageVariables 
       Tags:
         Tag: Value
       AccessLogSettings:
