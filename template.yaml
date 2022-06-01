@@ -6,7 +6,7 @@ Parameters:
     Default: Prod
   StageVariables:
     Type: String
-    Key: mongoDB
+    Name: mongoDB
     Value: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
 
 Resources:
@@ -74,7 +74,31 @@ Resources:
             RouteSettings:
               ThrottlingBurstLimit: 600
 
-  HttpApi:
+  RetriveUserSam:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: RetriveUserSam/
+      FunctionName: "RetriveUser-Sam"
+      Handler: index.lambdahandler
+      Environment:
+        Variables:
+          databaseName: admin
+          databaseUser: guna
+      Runtime: nodejs14.x
+      Events:
+        ExplicitApi: # warning: creates a public endpoint
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Method: POST
+            Path: /create
+            TimeoutInMillis: 15000
+            PayloadFormatVersion: "1.0"
+            RouteSettings:
+              ThrottlingBurstLimit: 600
+
+
+    HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
       StageName: !Ref StageName
