@@ -4,19 +4,15 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-JWTAuthorizer:
-    Type: AWS::ApiGatewayV2::Authorizer
-    Properties: 
-      ApiId: !Ref HttpApi
-      AuthorizerType: JWT
-      IdentitySource: 
-        - "$request.header.Authorization"
-      JwtConfiguration: 
-        Audience: 
-        - https://aikyne-jwt-authorizer
-        Issuer: "https://aikyne.us.auth0.com/"
-      Name: test-jwt-authorizer
-
+  Auth:
+        Authorizers:
+          OAuth2Authorizer:
+            JwtConfiguration:
+              issuer: "https://aikyne.us.auth0.com/"
+              audience:
+                - https://aikyne-jwt-authorizer
+            IdentitySource: "$request.header.Authorization"
+        DefaultAuthorizer: OAuth2Authorizer
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
@@ -52,7 +48,7 @@ Resources:
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
-            Auth : !Ref JWTAuthorizer
+            Auth: !Ref Auth
             Method: POST
             Path: /auth
             TimeoutInMillis: 15000
@@ -82,7 +78,7 @@ Resources:
             PayloadFormatVersion: "1.0"
             RouteSettings:
               ThrottlingBurstLimit: 600
-  
+
   HttpApi:
     Type: AWS::Serverless::HttpApi
     Properties:
