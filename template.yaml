@@ -5,7 +5,7 @@ Parameters:
     Type: String
     Default: Prod
   Auth:
-    Authorizers:
+    Authorizer:
       OAuth2Authorizer:
         JwtConfiguration:
           issuer: "https://aikyne.us.auth0.com/"
