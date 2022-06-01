@@ -23,7 +23,6 @@ Resources:
     Properties:
       CodeUri: hello-world/
       Handler: app.handler
-      Auth : !Ref JWTAuthorizer
       Runtime: nodejs14.x
       Events:
         ExplicitApi: # warning: creates a public endpoint
@@ -43,7 +42,6 @@ Resources:
       CodeUri: AuthenticateUser-Sam/
       FunctionName: "AuthenticateUser-Sam"
       Handler: index.lambdahandler
-      Auth : !Ref JWTAuthorizer
       Environment:
         Variables:
           databaseName: db
@@ -54,6 +52,7 @@ Resources:
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
+            Auth : !Ref JWTAuthorizer
             Method: POST
             Path: /auth
             TimeoutInMillis: 15000
@@ -67,7 +66,6 @@ Resources:
       CodeUri: CreateUser-Sam/
       FunctionName: "CreateUser-Sam"
       Handler: index.lambdahandler
-      Auth : !Ref JWTAuthorizer
       Environment:
         Variables:
           databaseName: mongodb
