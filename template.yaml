@@ -4,8 +4,7 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-  StageVariables:
-    mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
+  svar: {'test_var': 'test1var'}
 
 Resources:
   HelloWorldFunction:
@@ -81,14 +80,24 @@ Resources:
       AccessLogSettings:
         DestinationArn: !GetAtt AccessLogs.Arn
         Format: $context.requestId
+      Auth:
+        Authorizers:
+          OAuth2Authorizer:
+            JwtConfiguration:
+              issuer: "https://aikyne.us.auth0.com/"
+              audience:
+                - https://aikyne-jwt-authorizer
+            IdentitySource: "$request.header.Authorization"
+        DefaultAuthorizer: OAuth2Authorizer
       DefaultRouteSettings:
         ThrottlingBurstLimit: 200
       RouteSettings:
         "GET /hello":
           ThrottlingBurstLimit: 500 # overridden in HttpApi Event
-      StageVariables:
-        mongodb: guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher
+      StageVariables: !Ref svar
       FailOnWarnings: true
+
+  
 
   AccessLogs:
     Type: AWS::Logs::LogGroup
