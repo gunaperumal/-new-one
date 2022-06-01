@@ -77,7 +77,7 @@ Resources:
   RetriveUserSam:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: RetriveUserSam/
+      CodeUri: RetriveUser-Sam/
       FunctionName: "RetriveUser-Sam"
       Handler: index.lambdahandler
       Environment:
@@ -91,7 +91,7 @@ Resources:
           Properties:
             ApiId: !Ref HttpApi
             Method: POST
-            Path: /create
+            Path: /retrive
             TimeoutInMillis: 15000
             PayloadFormatVersion: "1.0"
             RouteSettings:
