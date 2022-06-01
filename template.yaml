@@ -4,7 +4,8 @@ Parameters:
   StageName:
     Type: String
     Default: Prod
-  svar: '{"test_var": "test1var"}'
+  StageVar:
+    mongoDB: "guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher"
 
 Resources:
   HelloWorldFunction:
@@ -94,10 +95,8 @@ Resources:
       RouteSettings:
         "GET /hello":
           ThrottlingBurstLimit: 500 # overridden in HttpApi Event
-      StageVariables: !Ref svar
+      StageVariables: !Ref StageVar
       FailOnWarnings: true
-
-  
 
   AccessLogs:
     Type: AWS::Logs::LogGroup
