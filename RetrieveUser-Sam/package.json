@@ -1,0 +1,25 @@
+{
+  "name": "retrieveuser-sam",
+  "version": "1.0.0",
+  "description": "..",
+  "main": "index.js",
+  "dependencies": {
+    "btoa-atob": "^0.1.2",
+    "deepmerge": "^4.2.2",
+    "mongoose": "^5.7.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gunaperumal/-new-one.git"
+  },
+  "author": "guna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gunaperumal/-new-one/issues"
+  },
+  "homepage": "https://github.com/gunaperumal/-new-one#readme"
+}
