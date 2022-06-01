@@ -5,14 +5,14 @@ Parameters:
     Type: String
     Default: Prod
   Auth:
-        Authorizers:
-          OAuth2Authorizer:
-            JwtConfiguration:
-              issuer: "https://aikyne.us.auth0.com/"
-              audience:
-                - https://aikyne-jwt-authorizer
-            IdentitySource: "$request.header.Authorization"
-        DefaultAuthorizer: OAuth2Authorizer
+    Authorizers:
+      OAuth2Authorizer:
+        JwtConfiguration:
+          issuer: "https://aikyne.us.auth0.com/"
+          audience:
+            - https://aikyne-jwt-authorizer
+        IdentitySource: "$request.header.Authorization"
+    DefaultAuthorizer: OAuth2Authorizer
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
