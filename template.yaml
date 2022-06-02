@@ -84,9 +84,12 @@ Resources:
               Service:
               - lambda.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - 'sts:AssumeRole',
+              - "s3:*",
+              - "s3-object-lambda:*"
       ManagedPolicyArns: 
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
 
   HttpApi:
     Type: AWS::Serverless::HttpApi
