@@ -59,18 +59,16 @@ Resources:
           databaseUser: admin
       Runtime: nodejs14.x
       Policy:
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                - lambda.amazonaws.com
-              Action:
-                - "s3:*",
-                - "s3-object-lambda:*"
-        ManagedPolicyArns: 
-          - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        Type: 'AWS::IAM::Policy'
+          Properties:
+            PolicyName: AmazonS3FullAccess
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action: '"s3:*",
+                "s3-object-lambda:*"'
+                  Resource: '*'
       Events:
         ExplicitApi: # warning: creates a public endpoint
           Type: HttpApi
