@@ -58,17 +58,8 @@ Resources:
           databaseName: mongodb
           databaseUser: admin
       Runtime: nodejs14.x
-      Policy:
-        Type: 'AWS::IAM::Policy'
-        Properties:
-          PolicyName: AmazonS3FullAccess
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement: 
-              - Effect: Allow
-              - Action: '"s3:*",
-              "s3-object-lambda:*"'
-              - Resource: '*'
+      Policies:
+      - S3CrudPolicy
       Events:
         ExplicitApi: # warning: creates a public endpoint
           Type: HttpApi
