@@ -61,6 +61,7 @@ Resources:
       Policies:
       - AmazonDynamoDBFullAccess
       - AmazonS3FullAccess
+      - CloudWatchLogsFullAccess
       Events:
         ExplicitApi: # warning: creates a public endpoint
           Type: HttpApi
