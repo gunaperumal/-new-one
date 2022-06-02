@@ -58,7 +58,19 @@ Resources:
           databaseName: mongodb
           databaseUser: admin
       Runtime: nodejs14.x
-      Role: !GetAtt FunctionExecutionRole.Arn
+      Policy:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                - lambda.amazonaws.com
+              Action:
+                - "s3:*",
+                - "s3-object-lambda:*"
+        ManagedPolicyArns: 
+          - arn:aws:iam::aws:policy/AmazonS3FullAccess
       Events:
         ExplicitApi: # warning: creates a public endpoint
           Type: HttpApi
@@ -72,24 +84,6 @@ Resources:
             PayloadFormatVersion: "1.0"
             RouteSettings:
               ThrottlingBurstLimit: 600
-
-  FunctionExecutionRole:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-              - lambda.amazonaws.com
-            Action:
-              - 'sts:AssumeRole',
-              - "s3:*",
-              - "s3-object-lambda:*"
-      ManagedPolicyArns: 
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-        - arn:aws:iam::aws:policy/AmazonS3FullAccess
 
   HttpApi:
     Type: AWS::Serverless::HttpApi
