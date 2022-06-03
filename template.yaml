@@ -59,8 +59,6 @@ Resources:
           databaseUser: admin
       Runtime: nodejs14.x
       VpcConfig:
-        VPCIds:
-          - vpc-02399dd11de7cf393
         SecurityGroupIds:
           - sg-07d1c1310ab12f6f6
         SubnetIds:
