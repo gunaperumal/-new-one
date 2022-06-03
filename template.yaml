@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Parameters:
   StageName:
@@ -46,7 +46,7 @@ Resources:
             PayloadFormatVersion: "1.0"
             RouteSettings:
               ThrottlingBurstLimit: 600
-  
+
   CreateUserSam:
     Type: AWS::Serverless::Function
     Properties:
@@ -58,6 +58,14 @@ Resources:
           databaseName: mongodb
           databaseUser: admin
       Runtime: nodejs14.x
+      VpcConfig:
+        VPCIds:
+          - vpc-02399dd11de7cf393
+        SecurityGroupIds:
+          - sg-07d1c1310ab12f6f6
+        SubnetIds:
+          - subnet-056a1a120813936b6
+          - subnet-0f985f61656eefa34
       Policies:
       Events:
         ExplicitApi: # warning: creates a public endpoint
@@ -65,7 +73,7 @@ Resources:
           Properties:
             ApiId: !Ref HttpApi
             Auth:
-              Authorizer: 'NONE'
+              Authorizer: "NONE"
             Method: POST
             Path: /create
             TimeoutInMillis: 15000
@@ -97,7 +105,7 @@ Resources:
         "GET /hello":
           ThrottlingBurstLimit: 500 # overridden in HttpApi Event
       StageVariables:
-        mongoDB : "guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher"
+        mongoDB: "guna:WCPUfJGgOcN7HV20@gunacluster.wrvd0.mongodb.net/SocialMediaPublisher"
       FailOnWarnings: true
 
   AccessLogs:
@@ -107,7 +115,7 @@ Outputs:
   HttpApiUrl:
     Description: URL of your API endpoint
     Value:
-      Fn::Sub: 'https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${StageName}/'
+      Fn::Sub: "https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${StageName}/"
   HttpApiId:
     Description: Api id of HttpApi
     Value:
